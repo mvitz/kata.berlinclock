@@ -56,6 +56,14 @@ public class BerlinClock {
                 glowYellow(minutes() > 54));
     }
 
+    Lamp[] getBottomMinutes() {
+        return lamps(
+                glowYellow(minutes() % 5 > 0),
+                glowYellow(minutes() % 5 > 1),
+                glowYellow(minutes() % 5 > 2),
+                glowYellow(minutes() % 5 > 3));
+    }
+
     private long seconds() {
         return time;
     }

@@ -244,4 +244,39 @@ public class BerlinClockTest {
                 OFF);
     }
 
+    @Test
+    public void bottomMinuteLampAddedEveryMinuteAndClearedAfterFiveMinutes() throws Exception {
+        assertThat(clock.getBottomMinutes()).as("Minute: 00").containsExactly(OFF, OFF, OFF, OFF);
+        clock.tick(1, MINUTES);
+        assertThat(clock.getBottomMinutes())
+        .as("Minute: 01")
+        .containsExactly(YELLOW, OFF, OFF, OFF);
+        clock.tick(1, MINUTES);
+        assertThat(clock.getBottomMinutes()).as("Minute: 02").containsExactly(
+                YELLOW,
+                YELLOW,
+                OFF,
+                OFF);
+        clock.tick(1, MINUTES);
+        assertThat(clock.getBottomMinutes()).as("Minute: 03").containsExactly(
+                YELLOW,
+                YELLOW,
+                YELLOW,
+                OFF);
+        clock.tick(1, MINUTES);
+        assertThat(clock.getBottomMinutes()).as("Minute: 04").containsExactly(
+                YELLOW,
+                YELLOW,
+                YELLOW,
+                YELLOW);
+        clock.tick(1, MINUTES);
+        assertThat(clock.getBottomMinutes()).as("Minute: 05").containsExactly(OFF, OFF, OFF, OFF);
+        clock.tick(7, MINUTES);
+        assertThat(clock.getBottomMinutes()).as("Minute: 12").containsExactly(
+                YELLOW,
+                YELLOW,
+                OFF,
+                OFF);
+    }
+
 }
