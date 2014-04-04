@@ -12,17 +12,7 @@ import java.util.concurrent.TimeUnit;
 public class BerlinClock {
 
     public static enum Lamp {
-        YELLOW("Y"), RED("R"), OFF("O");
-        private final String mnemonic;
-
-        private Lamp(final String mnemonic) {
-            this.mnemonic = mnemonic;
-        }
-
-        @Override
-        public String toString() {
-            return mnemonic;
-        }
+        YELLOW, RED, OFF;
     }
 
     private long time;
@@ -51,12 +41,31 @@ public class BerlinClock {
                 glowRed(hours() % 5 > 3));
     }
 
+    Lamp[] getTopMinutes() {
+        return lamps(
+                glowYellow(minutes() > 4),
+                glowYellow(minutes() > 9),
+                glowRed(minutes() > 14),
+                glowYellow(minutes() > 19),
+                glowYellow(minutes() > 24),
+                glowRed(minutes() > 29),
+                glowYellow(minutes() > 34),
+                glowYellow(minutes() > 39),
+                glowRed(minutes() > 44),
+                glowYellow(minutes() > 49),
+                glowYellow(minutes() > 54));
+    }
+
     private long seconds() {
         return time;
     }
 
     private long hours() {
         return SECONDS.toHours(seconds()) % 24;
+    }
+
+    private long minutes() {
+        return SECONDS.toMinutes(seconds()) % 60;
     }
 
     public void tick() {

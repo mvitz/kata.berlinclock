@@ -4,6 +4,7 @@ import static de.mvitz.kata.berlinclock.BerlinClock.Lamp.OFF;
 import static de.mvitz.kata.berlinclock.BerlinClock.Lamp.RED;
 import static de.mvitz.kata.berlinclock.BerlinClock.Lamp.YELLOW;
 import static java.util.concurrent.TimeUnit.HOURS;
+import static java.util.concurrent.TimeUnit.MINUTES;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
@@ -78,4 +79,169 @@ public class BerlinClockTest {
         clock.tick(7, HOURS);
         assertThat(clock.getBottomHours()).as("Hour: 12").containsExactly(RED, RED, OFF, OFF);
     }
+
+    @Test
+    public void topMinuteLampAddedEveryFiveMinutes() throws Exception {
+        assertThat(clock.getTopMinutes())
+        .as("Minute: 00")
+        .hasSize(11)
+        .containsExactly(OFF, OFF, OFF, OFF, OFF, OFF, OFF, OFF, OFF, OFF, OFF);
+        clock.tick(5, MINUTES);
+        assertThat(clock.getTopMinutes()).as("Minute: 05").containsExactly(
+                YELLOW,
+                OFF,
+                OFF,
+                OFF,
+                OFF,
+                OFF,
+                OFF,
+                OFF,
+                OFF,
+                OFF,
+                OFF);
+        clock.tick(5, MINUTES);
+        assertThat(clock.getTopMinutes()).as("Minute: 10").containsExactly(
+                YELLOW,
+                YELLOW,
+                OFF,
+                OFF,
+                OFF,
+                OFF,
+                OFF,
+                OFF,
+                OFF,
+                OFF,
+                OFF);
+        clock.tick(5, MINUTES);
+        assertThat(clock.getTopMinutes()).as("Minute: 15").containsExactly(
+                YELLOW,
+                YELLOW,
+                RED,
+                OFF,
+                OFF,
+                OFF,
+                OFF,
+                OFF,
+                OFF,
+                OFF,
+                OFF);
+        clock.tick(5, MINUTES);
+        assertThat(clock.getTopMinutes()).as("Minute: 20").containsExactly(
+                YELLOW,
+                YELLOW,
+                RED,
+                YELLOW,
+                OFF,
+                OFF,
+                OFF,
+                OFF,
+                OFF,
+                OFF,
+                OFF);
+        clock.tick(5, MINUTES);
+        assertThat(clock.getTopMinutes()).as("Minute: 25").containsExactly(
+                YELLOW,
+                YELLOW,
+                RED,
+                YELLOW,
+                YELLOW,
+                OFF,
+                OFF,
+                OFF,
+                OFF,
+                OFF,
+                OFF);
+        clock.tick(5, MINUTES);
+        assertThat(clock.getTopMinutes()).as("Minute: 30").containsExactly(
+                YELLOW,
+                YELLOW,
+                RED,
+                YELLOW,
+                YELLOW,
+                RED,
+                OFF,
+                OFF,
+                OFF,
+                OFF,
+                OFF);
+        clock.tick(5, MINUTES);
+        assertThat(clock.getTopMinutes()).as("Minute: 35").containsExactly(
+                YELLOW,
+                YELLOW,
+                RED,
+                YELLOW,
+                YELLOW,
+                RED,
+                YELLOW,
+                OFF,
+                OFF,
+                OFF,
+                OFF);
+        clock.tick(5, MINUTES);
+        assertThat(clock.getTopMinutes()).as("Minute: 40").containsExactly(
+                YELLOW,
+                YELLOW,
+                RED,
+                YELLOW,
+                YELLOW,
+                RED,
+                YELLOW,
+                YELLOW,
+                OFF,
+                OFF,
+                OFF);
+        clock.tick(5, MINUTES);
+        assertThat(clock.getTopMinutes()).as("Minute: 45").containsExactly(
+                YELLOW,
+                YELLOW,
+                RED,
+                YELLOW,
+                YELLOW,
+                RED,
+                YELLOW,
+                YELLOW,
+                RED,
+                OFF,
+                OFF);
+        clock.tick(5, MINUTES);
+        assertThat(clock.getTopMinutes()).as("Minute: 50").containsExactly(
+                YELLOW,
+                YELLOW,
+                RED,
+                YELLOW,
+                YELLOW,
+                RED,
+                YELLOW,
+                YELLOW,
+                RED,
+                YELLOW,
+                OFF);
+        clock.tick(5, MINUTES);
+        assertThat(clock.getTopMinutes()).as("Minute: 55").containsExactly(
+                YELLOW,
+                YELLOW,
+                RED,
+                YELLOW,
+                YELLOW,
+                RED,
+                YELLOW,
+                YELLOW,
+                RED,
+                YELLOW,
+                YELLOW);
+        clock.tick(5, MINUTES);
+        assertThat(clock.getTopMinutes()).as("Minute: 60").containsExactly(
+                OFF,
+                OFF,
+                OFF,
+                OFF,
+                OFF,
+                OFF,
+                OFF,
+                OFF,
+                OFF,
+                OFF,
+                OFF);
+    }
+
 }
