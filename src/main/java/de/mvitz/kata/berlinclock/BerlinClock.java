@@ -25,14 +25,38 @@ public class BerlinClock {
         }
     }
 
-    private long seconds;
+    private long time;
 
     public BerlinClock(final int hours, final int minutes, final int seconds) {
-        this.seconds = HOURS.toSeconds(hours) + MINUTES.toSeconds(minutes) + seconds;
+        this.time = HOURS.toSeconds(hours) + MINUTES.toSeconds(minutes) + seconds;
     }
 
     Lamp getSeconds() {
-        return glow(YELLOW, seconds % 2 == 0);
+        return glowYellow(seconds() % 2 == 0);
+    }
+
+    Lamp[] getTopHours() {
+        return lamps(
+                glowRed(hours() > 4),
+                glowRed(hours() > 9),
+                glowRed(hours() > 14),
+                glowRed(hours() > 19));
+    }
+
+    Lamp[] getBottomHours() {
+        return lamps(
+                glowRed(hours() % 5 > 0),
+                glowRed(hours() % 5 > 1),
+                glowRed(hours() % 5 > 2),
+                glowRed(hours() % 5 > 3));
+    }
+
+    private long seconds() {
+        return time;
+    }
+
+    private long hours() {
+        return SECONDS.toHours(seconds()) % 24;
     }
 
     public void tick() {
@@ -44,20 +68,23 @@ public class BerlinClock {
     }
 
     void tick(final int duration, final TimeUnit unit) {
-        this.seconds += unit.toSeconds(duration);
+        this.time += unit.toSeconds(duration);
     }
 
-    Lamp[] getTopHours() {
-        final long hours = SECONDS.toHours(seconds) % 24;
-        return new Lamp[] {
-                glow(RED, hours > 4),
-                glow(RED, hours > 9),
-                glow(RED, hours > 14),
-                glow(RED, hours > 19) };
+    private Lamp glowYellow(final boolean expression) {
+        return glow(YELLOW, expression);
+    }
+
+    private Lamp glowRed(final boolean expression) {
+        return glow(RED, expression);
     }
 
     private Lamp glow(final Lamp lamp, final boolean expression) {
         return expression ? lamp : OFF;
+    }
+
+    private Lamp[] lamps(final Lamp... lamps) {
+        return lamps;
     }
 
 }
